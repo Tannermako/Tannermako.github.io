@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Sportsbook</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap -->
+    <link href="{{ STATIC_URL }}bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="{{ STATIC_URL }}extra.css" rel="stylesheet" media="screen">
+  </head>
+  <body>
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="brand" href="/" name="top">Sportsbook</a>
+          <div class="nav-collapse collapse">
+            <ul class="nav">
+              <li><a href="/"><i class="icon-home icon-white"></i> Home</a></li>
+              <li class="divider-vertical"></li>
+              <li class="dropdown">
+                <a class="dropdown-toggle" href="#" data-toggle="dropdown"><i class="icon-tags icon-white"></i> Odds</a>
+                <ul class="dropdown-menu">
+                  <li><a href="{% url "baseball" %}">MLB</a></li>
+                  <li><a href="{% url "basketball" %}">NBA</a></li>
+                  <li><a href="{% url "football" %}">NFL</a></li>
+                </ul>
+              </li>
+            </ul>
+            {% if user.is_authenticated %}
+            <ul class="nav pull-right">
+              <li class="dropdown">
+                <a class="dropdown-toggle" href="#" data-toggle="dropdown"><i class="icon-user icon-white"></i> My Account <strong class="caret"></strong></a>
+                <ul class="dropdown-menu">
+                  <li><a href="{% url "profile" %}">My Profile</a></li>
+                  <li class="divider"></li>
+                  <li><a href="{% url "auth_logout" %}">Logout</a></li>
+                </ul>
+              </li>
+            </ul>
+            {% else %}
+            <ul class="nav pull-right">
+              <li><a href="{% url "registration_register" %}">Sign Up</a></li>
+              <li class="divider-vertical"></li>
+              <li class="dropdown">
+                <a class="dropdown-toggle" href="#" data-toggle="dropdown">Sign In <strong class="caret"></strong></a>
+                <div class="dropdown-menu" style="padding: 15px">
+                  <form method="post" action="{% url "auth_login" %}" accept-charset="UTF-8">
+                    {% csrf_token %}
+                    <input style="margin-bottom: 15px;" type="text" placeholder="Username" id="username" name="username">
+                    <input style="margin-bottom: 15px;" type="password" placeholder="Password" id="password" name="password">
+                    <input style="float: left; margin-right: 10px;" type="checkbox" name="remember-me" id="remember-me" value="1">
+                    <label class="string optional" for="user_remember_me"> Remember me</label>
+                    <input class="btn btn-primary btn-block" type="submit" id="sign-in" value="Sign In">
+                  </form>
+                </div>
+              </li>
+            </ul>
+            {% endif %}
+          </div>
+          <!--/.nav-collapse -->
+        </div>
+        <!--/.container-fluid -->
+      </div>
+      <!--/.navbar-inner -->
+    </div>
+    <!--/.navbar -->
+<div class="content">
+  {% block content %}
+  {% endblock content %}
+</div>
+    <script src="http://code.jquery.com/jquery.js"></script>
+    <script src="{{ STATIC_URL }}bootstrap/js/bootstrap.min.js"></script>
+    <script src="{{ STATIC_URL }}extra.js"></script>
+  </body>
+</html>
